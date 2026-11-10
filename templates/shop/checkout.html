@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout</title>
+</head>
+
+<body>
+
+<h1>Checkout</h1>
+
+<h2>Total Amount: ₹{{ total }}</h2>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Place Order</button>
+
+</form>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Details</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+<header>
+    <h2>ShopEasy</h2>
+    <a href="/">Home</a>
+    <a href="/cart/">Cart</a>
+</header>
+
+<div class="product-detail">
+
+    {% if product.image %}
+        <img src="{{ product.image }}" alt="{{ product.name }}">
+    {% else %}
+        <div class="placeholder">📦</div>
+    {% endif %}
+
+    <h1>{{ product.name }}</h1>
+
+    <p>{{ product.description }}</p>
+
+    <h2>₹{{ product.price }}</h2>
+
+    <p>Available stock: {{ product.stock }}</p>
+
+    <form method="POST"
+          action="{% url 'add_cart' product.id %}">
+
+        {% csrf_token %}
+
+        <button type="submit"
+                {% if not product.stock %}disabled{% endif %}>
+            Add to Cart
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ShopEasy - Online Store</title>
+
+    {% load static %}
+
+    <link rel="stylesheet"
+          href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+<header>
+    <h2>ShopEasy</h2>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/cart/">Cart</a>
+
+        {% if user.is_authenticated %}
+            <a href="/my-orders/">My Orders</a>
+            <a href="/logout/">Logout</a>
+        {% else %}
+            <a href="/login/">Login</a>
+            <a href="/register/">Register</a>
+        {% endif %}
+    </nav>
+</header>
+
+<section class="hero">
+
+    <h1>Welcome to ShopEasy</h1>
+
+    <p>Discover amazing products at amazing prices.</p>
+
+    <a href="#products" class="btn">Shop Now</a>
+
+</section>
+
+<section id="products">
+
+    <h2>Our Products</h2>
+
+    <div class="products">
+
+        {% for product in products %}
+
+        <div class="card">
+
+            {% if product.image %}
+                <img src="{{ product.image }}"
+                     alt="{{ product.name }}">
+            {% else %}
+                <div class="placeholder">📦</div>
+            {% endif %}
+
+            <h3>{{ product.name }}</h3>
+
+            <p>{{ product.description|truncatewords:12 }}</p>
+
+            <h3>₹{{ product.price }}</h3>
+
+            <a href="{% url 'product' product.id %}">
+                View Details
+            </a>
+
+            <form method="POST"
+                  action="{% url 'add_cart' product.id %}">
+
+                {% csrf_token %}
+
+                <button type="submit">Add to Cart</button>
+
+            </form>
+
+        </div>
+
+        {% empty %}
+
+        <p>No products available.</p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<script src="{% static 'js/script.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Orders</title>
+</head>
+
+<body>
+
+{% if order %}
+
+    <h1>Order Placed Successfully!</h1>
+
+    <h3>Order ID: {{ order.id }}</h3>
+
+    <h3>Total: ₹{{ order.total }}</h3>
+
+{% else %}
+
+    <h1>My Orders</h1>
+
+    {% for order in orders %}
+
+        <div>
+
+            <h3>Order #{{ order.id }}</h3>
+
+            <p>Total: ₹{{ order.total }}</p>
+
+            <p>{{ order.created_at }}</p>
+
+        </div>
+
+    {% empty %}
+
+        <p>No orders found.</p>
+
+    {% endfor %}
+
+{% endif %}
+
+<a href="/">Continue Shopping</a>
+
+</body>
+</html>
